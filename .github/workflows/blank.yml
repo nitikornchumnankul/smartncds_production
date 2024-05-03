@@ -5,13 +5,13 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: smartncds_production
+    runs-on: ubuntu-latest
+    environment: smartncds_production
     steps:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.3
         with:
-          #host: ${{ secrets.HOST }}
-          host: "gate.manage.proen.cloud" 
+          host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
