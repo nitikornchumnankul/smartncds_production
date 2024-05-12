@@ -8,21 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const auth_module_1 = require("./main/auth/auth.module");
-const mainapp_module_1 = require("./main/mainapp.module");
 let AppModule = class AppModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mainapp_module_1.MainAppModule,
-            auth_module_1.AuthModule
+            platform_express_1.MulterModule.register({
+                storage: (0, multer_1.diskStorage)({
+                    destination: function (req, file, cb) {
+                        cb(null, './upload');
+                    },
+                    filename: function (req, file, cb) {
+                        const typeFile = file.originalname.split('.');
+                        cb(null, "test" + "." + typeFile[1]);
+                    },
+                }),
+            }),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);
+exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map
